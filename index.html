@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor de Modelos 3D</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Menu esquerdo para adicionar modelos -->
+  <div id="menu-left">
+    <h2>Seleção de modelos</h2>
+    <ul id="modelList"></ul>
+  </div>  
+
+  <!-- Canvas para renderização 3D -->
+  <canvas id="glCanvas"></canvas>
+
+  <!-- Menu direito dividido -->
+  <div id="menu-right">
+    <h2>Modelos na Cena</h2>
+    <ul id="sceneModelList"></ul>
+  
+    <h2>Texturas</h2>
+    <ul id="textureList"></ul>
+  </div>  
+
+  <!-- Menu inferior para editar propriedades -->
+  <div id="menu-bottom">
+    <div class="input-group">
+      <label for="translateX">Translação X:</label>
+      <input type="number" id="translateX" value="0" step="0.1">
+    </div>
+    <div class="input-group">
+      <label for="translateY">Translação Y:</label>
+      <input type="number" id="translateY" value="0" step="0.1">
+    </div>
+    <div class="input-group">
+      <label for="translateZ">Translação Z:</label>
+      <input type="number" id="translateZ" value="0" step="0.1">
+    </div>
+    <div class="input-group">
+      <label for="scale">Escala:</label>
+      <input type="number" id="scale" value="1" step="0.1">
+    </div>
+    <div class="input-group">
+      <label for="rotationY">Rotação Y:</label>
+      <input type="number" id="rotationY" value="0" step="1">
+    </div>
+    
+    <button onclick="updateModelProperties()">Atualizar</button>
+    <button id="saveScene">💾 Salvar Cena</button>
+    <button id="loadScene">📥 Carregar Cena</button>
+    <input type="file" id="loadSceneInput" accept=".json" style="display: none;">
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gl-matrix@2.8.1/dist/gl-matrix-min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
