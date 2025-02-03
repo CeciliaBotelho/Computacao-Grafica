@@ -36,8 +36,8 @@ Este projeto é um **editor 3D interativo** desenvolvido em **WebGL**, que permi
 
 1️⃣ **Clone o repositório:**
 ```bash
-git clone https://github.com/seu-usuario/webgl-3d-editor.git
-cd webgl-3d-editor
+git clone https://github.com/CeciliaBotelho/Computa-o-Grafica.git
+cd Computa-o-Grafica
 ```
 
 2️⃣ **Abra o arquivo `index.html` no navegador:**
