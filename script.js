@@ -210,7 +210,6 @@ function updateInstanceBuffers() {
   const instanceScales = new Float32Array(scene.map(obj => obj.scale));
   const instanceRotations = new Float32Array(scene.map(obj => obj.rotationY));
   
-  // Certifique-se de mapear corretamente os índices das texturas
   const instanceTextureIndices = new Float32Array(scene.map(obj => {
     return Object.keys(textures).indexOf(obj.textureName);
   }));
@@ -255,13 +254,10 @@ function applyTexture(textureName) {
 
   const selectedModel = scene[selectedModelIndex];
 
-  console.log(`📌 Aplicando textura '${textureName}' ao modelo ${selectedModel.model} (ID: ${selectedModelIndex})`);
-
   selectedModel.textureName = textureName;
   selectedModel.textureIndex = Object.keys(textures).indexOf(textureName); // Certifique-se de que este índice está correto
   selectedModel.texture = loadTexture(textures[textureName]);
 
-  // Atualiza os buffers e re-renderiza a cena
   updateInstanceBuffers();
   renderSceneInstanced();
 }
@@ -285,15 +281,9 @@ function updateModelProperties() {
   if (selectedTextureIndex !== null) {
     const textureName = Object.keys(textures)[selectedTextureIndex]; 
     const texturePath = textures[textureName];
-
-    console.log(`📌 Aplicando textura '${textureName}' ao modelo ${selectedModel.model}`);
-
     selectedModel.textureName = textureName;
     selectedModel.texture = loadTexture(texturePath);
   }
-
-  console.log("🔄 Cena atualizada:", scene);
-
   // Atualiza os buffers e re-renderiza a cena
   updateInstanceBuffers();
   renderSceneInstanced();
@@ -485,7 +475,6 @@ function renderSceneInstanced() {
     const instanceScales = new Float32Array(instances.map(obj => obj.scale));
     const instanceRotations = new Float32Array(instances.map(obj => obj.rotationY));
 
-    // 🚀 Atualiza os índices de textura com base nas texturas realmente carregadas
     const instanceTextureIndices = new Float32Array(
       instances.map(obj => textureIndices[obj.textureName || "Madeira"])
     );
@@ -502,7 +491,6 @@ function renderSceneInstanced() {
     ext.drawArraysInstancedANGLE(gl.TRIANGLES, 0, vertexCounts[modelName], instances.length);
   });
 }
-
 
 function updateBuffer(buffer, newData, key, attribute, size) {
   if (!arraysEqual(newData, lastInstanceData[key])) {
@@ -607,7 +595,6 @@ function loadTexture(url) {
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, placeholder);
 
     const image = new Image();
-    console.log(`url load texture: `, url)
     image.src = url;
     image.onload = () => {
       gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -658,8 +645,6 @@ async function addModelToScene(modelName) {
 
   scene.push(newObject);
   console.log(newObject)
-
-  console.log(`📌 Novo objeto: ${newObject} adicionado na posição:`, newObject.position);
 
   updateSceneModelList();
   renderSceneInstanced();
@@ -732,11 +717,9 @@ document.addEventListener("DOMContentLoaded", () => {
   populateModelList();  // Gera a lista de modelos disponíveis
   populateList('textureList', textures, applyTexture); // Gera a lista de texturas disponíveis
 
-  // ref error loadTextures();  // 🚀 Carrega todas as texturas uma vez
-  // bindTextures();  // 🎨 Vincula as texturas aos samplers do WebGL
-  initializeInstanceBuffers();  // 🏗️ Inicializa os buffers de instâncias
-  initializeShaders();  // ✨ Inicializa os shaders
-  renderSceneInstanced();  // 📷 Renderiza a cena corretamente
+  initializeInstanceBuffers(); 
+  initializeShaders();  
+  renderSceneInstanced();  
 });
 
 
@@ -795,7 +778,7 @@ async function loadSceneFromJson(event) {
         vertexCounts[objData.model] = vertices.length / 5;
       }
       
-      const textureName = objData.texture || "Pedra"
+      const textureName = objData.texture || "Madeira"
       const texture = loadTexture(textures[textureName]);
 
       scene.push({
